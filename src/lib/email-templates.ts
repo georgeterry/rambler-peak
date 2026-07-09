@@ -14,6 +14,12 @@ const FONT = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial
 const money = (pence: number, currency: string) =>
   new Intl.NumberFormat('en-GB', { style: 'currency', currency }).format(pence / 100);
 
+// Human-friendly order reference derived from the Stripe session id. Stable
+// (same id -> same ref) and short enough to read out. The full session id is
+// kept on the owner's copy so orders can still be looked up in Stripe.
+export const orderReference = (order: Order): string =>
+  `RP-${order.id.replace(/[^a-zA-Z0-9]/g, '').slice(-8).toUpperCase()}`;
+
 const shell = (bodyInner: string) => `
 <!doctype html>
 <html lang="en">
@@ -22,8 +28,8 @@ const shell = (bodyInner: string) => `
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${MIST};padding:32px 16px;">
     <tr><td align="center">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid ${HAIRLINE};">
-        <tr><td style="background:${CHARCOAL};padding:24px 32px;">
-          <span style="color:#ffffff;font-size:18px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;">Rambler&nbsp;Peak<sup style="font-size:10px;">&reg;</sup></span>
+        <tr><td style="background:${CHARCOAL};padding:22px 32px;">
+          <img src="${site.url}/logos/wordmark-white.png" alt="Rambler Peak" width="176" height="16" style="display:block;width:176px;height:auto;border:0;outline:none;text-decoration:none;" />
         </td></tr>
         ${bodyInner}
         <tr><td style="padding:24px 32px;background:${CHARCOAL};">
@@ -65,6 +71,7 @@ export function orderConfirmationEmail(order: Order): { subject: string; html: s
     : '';
 
   const firstName = order.name?.split(' ')[0] ?? 'there';
+  const reference = orderReference(order);
 
   const html = shell(`
     <tr><td style="padding:32px 32px 8px;">
@@ -74,8 +81,8 @@ export function orderConfirmationEmail(order: Order): { subject: string; html: s
       </p>
     </td></tr>
     <tr><td style="padding:16px 32px 0;">
-      <p style="margin:0 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:${SLATE};">Order</p>
-      <p style="margin:0 0 16px;font-size:14px;color:${CHARCOAL};font-family:monospace;">${order.id}</p>
+      <p style="margin:0 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:${SLATE};">Order reference</p>
+      <p style="margin:0 0 16px;font-size:16px;font-weight:600;letter-spacing:0.04em;color:${CHARCOAL};">${reference}</p>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
         ${rows}
         <tr>
@@ -94,7 +101,7 @@ export function orderConfirmationEmail(order: Order): { subject: string; html: s
     `See you on the hills`,
     ``,
     `Thanks, ${firstName}. Your order is confirmed.`,
-    `Order: ${order.id}`,
+    `Order reference: ${reference}`,
     ``,
     ...order.lines.map((l) => `${l.quantity} x ${l.description}  ${money(l.amountPence, order.currency)}`),
     `Total paid: ${money(order.amountTotalPence, order.currency)}`,
@@ -126,10 +133,13 @@ export function orderOwnerNotificationEmail(order: Order): { subject: string; ht
     ? [ship.name, ship.line1, ship.line2, ship.city, ship.postcode, ship.country].filter(Boolean).join(', ')
     : 'No shipping address';
 
+  const reference = orderReference(order);
+
   const html = shell(`
     <tr><td style="padding:32px;">
       <h1 style="margin:0 0 4px;font-size:20px;font-weight:600;letter-spacing:0.02em;text-transform:uppercase;">New order &middot; ${money(order.amountTotalPence, order.currency)}</h1>
-      <p style="margin:0 0 20px;font-size:13px;color:${SLATE};font-family:monospace;">${order.id}</p>
+      <p style="margin:0 0 2px;font-size:15px;font-weight:600;letter-spacing:0.04em;color:${CHARCOAL};">${reference}</p>
+      <p style="margin:0 0 20px;font-size:12px;color:${SLATE};font-family:monospace;">${order.id}</p>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;line-height:1.6;margin-bottom:16px;">
         <tr><td style="padding:4px 0;color:${SLATE};width:120px;">Customer</td><td style="padding:4px 0;">${order.name ?? '—'}</td></tr>
         <tr><td style="padding:4px 0;color:${SLATE};">Email</td><td style="padding:4px 0;"><a href="mailto:${order.email ?? ''}" style="color:${BLUE};">${order.email ?? '—'}</a></td></tr>
@@ -144,7 +154,8 @@ export function orderOwnerNotificationEmail(order: Order): { subject: string; ht
 
   const text = [
     `New order — ${money(order.amountTotalPence, order.currency)}`,
-    `Order: ${order.id}`,
+    `Reference: ${reference}`,
+    `Stripe session: ${order.id}`,
     `Customer: ${order.name ?? '—'} <${order.email ?? '—'}>`,
     `Ship to: ${shipText}`,
     ``,
