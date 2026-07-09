@@ -48,7 +48,7 @@ export default function ProductPage({ params }: { params: Params }) {
 
   const reviews = productReviews(product.slug);
   const distribution = ratingDistribution(product.slug);
-  const isMat = product.slug === 'dreamlite-sleeping-mat';
+  const isMat = product.slug === 'dreamlite-camping-mat';
 
   return (
     <>

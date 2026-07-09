@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  const dreamlite = getProduct('dreamlite-sleeping-mat')!;
+  const dreamlite = getProduct('dreamlite-camping-mat')!;
   const pillow = getProduct('camping-pillow')!;
 
   return (
@@ -40,7 +40,7 @@ export default function HomePage() {
       <HeroFullBleed
         headline="Rekindle your connection with the natural world"
         sub="Ultralight sleep systems engineered in the Peak District."
-        primary={{ href: '/products/dreamlite-sleeping-mat', label: 'Shop DreamLite' }}
+        primary={{ href: '/products/dreamlite-camping-mat', label: 'Shop DreamLite' }}
         secondary={{ href: '/about', label: 'Our Story' }}
         image={{
           src: '/images/photos/hero-gritstone-edge.jpg',
@@ -79,7 +79,7 @@ export default function HomePage() {
           },
         ]}
         primaryCta={{
-          href: '/products/dreamlite-sleeping-mat',
+          href: '/products/dreamlite-camping-mat',
           label: `Shop DreamLite · ${formatPrice(dreamlite.price)}`,
         }}
         image={{

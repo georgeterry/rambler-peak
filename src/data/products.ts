@@ -35,8 +35,8 @@ export type Product = {
 const gbp = (pounds: number): Money => ({ amount: Math.round(pounds * 100), currency: 'GBP' });
 
 const dreamlite: Product = {
-  slug: 'dreamlite-sleeping-mat',
-  name: 'DreamLite Ultralight Sleeping Mat',
+  slug: 'dreamlite-camping-mat',
+  name: 'DreamLite Ultralight Camping Mat',
   shortName: 'DreamLite Mat',
   tagline: 'Ergonomic ultralight sleep system with integrated pillow.',
   price: gbp(27.99),
@@ -82,7 +82,7 @@ const dreamlite: Product = {
     { src: '/images/photos/hero-gritstone-edge.jpg', alt: 'Two ramblers sat on the DreamLite mat on a gritstone edge above a misty Peak District valley', ratio: '1:1', label: 'PDP · GALLERY 6 · WILD 1:1' },
   ],
   inTheBox: [
-    'DreamLite ultralight sleeping mat',
+    'DreamLite ultralight camping mat',
     'Integrated ergonomic pillow strap',
     'Repair patch kit',
     'Ultralight stuff sack',

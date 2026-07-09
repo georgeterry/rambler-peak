@@ -1,6 +1,6 @@
 export const primaryNav = [
   { href: '/shop', label: 'Shop' },
-  { href: '/products/dreamlite-sleeping-mat', label: 'DreamLite Mat' },
+  { href: '/products/dreamlite-camping-mat', label: 'DreamLite Mat' },
   { href: '/products/camping-pillow', label: 'Pillow' },
   { href: '/about', label: 'Our Story' },
   { href: '/support', label: 'Support' },
@@ -8,7 +8,7 @@ export const primaryNav = [
 
 export const footerNav = {
   shop: [
-    { href: '/products/dreamlite-sleeping-mat', label: 'DreamLite Sleeping Mat' },
+    { href: '/products/dreamlite-camping-mat', label: 'DreamLite Camping Mat' },
     { href: '/products/camping-pillow', label: 'Camping Pillow' },
     { href: '/shop', label: 'All products' },
   ],
