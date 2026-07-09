@@ -21,8 +21,12 @@ export async function POST(request: Request) {
 
   let event: Stripe.Event;
 
-  if (secret && signature) {
-    // Production path: cryptographically verify the payload came from Stripe.
+  if (secret) {
+    // Secret configured (production + any dev with it set): a signed request is
+    // required, and we cryptographically verify it came from Stripe.
+    if (!signature) {
+      return NextResponse.json({ error: 'Missing stripe-signature header' }, { status: 400 });
+    }
     try {
       event = stripe.webhooks.constructEvent(rawBody, signature, secret);
     } catch (err) {
@@ -33,7 +37,7 @@ export async function POST(request: Request) {
     }
   } else if (process.env.NODE_ENV !== 'production') {
     // Dev convenience: without a signing secret we trust the payload so the
-    // flow can be exercised locally. NEVER reached in production (see below).
+    // flow can be exercised locally. Never reached in production (see below).
     // eslint-disable-next-line no-console
     console.warn('[webhook] STRIPE_WEBHOOK_SECRET not set — skipping verification (dev only)');
     try {
