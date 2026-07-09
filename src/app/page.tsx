@@ -20,7 +20,7 @@ import { site } from '@/lib/seo';
 export const metadata: Metadata = {
   title: `${site.name} | ${site.tagline}`,
   description:
-    'Ultralight camping sleep systems engineered in the Peak District. The DreamLite sleeping mat and ergonomic pillow. 590 g, three-season warmth and free UK delivery over £30.',
+    'Rambler Peak makes ultralight camping mats and pillows, engineered in the Peak District. The DreamLite camping mat with integrated pillow: 590 g, three-season warmth, free UK delivery over £30.',
   alternates: { canonical: '/' },
   openGraph: {
     title: 'Rambler Peak | Ultralight sleep systems from the Peak District',

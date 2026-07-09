@@ -8,9 +8,9 @@ import { TrustBadgeStrip } from '@/components/brand/TrustBadgeStrip';
 import { products } from '@/data/products';
 
 export const metadata: Metadata = {
-  title: 'Shop',
+  title: 'Shop Camping Mats & Pillows',
   description:
-    'Ultralight camping sleep systems from the Peak District: the DreamLite sleeping mat and ergonomic camping pillow. Free UK delivery over £30.',
+    'Shop Rambler Peak ultralight camping mats and pillows from the Peak District: the DreamLite camping mat with integrated pillow, and the standalone camping pillow. Free UK delivery over £30.',
   alternates: { canonical: '/shop' },
 };
 

@@ -97,8 +97,8 @@ const dreamlite: Product = {
   ],
   ratingSummary: { average: 4.2, count: 78 }, // real, from amazon.co.uk/dp/B0BLS968D6
   meta: {
-    title: 'DreamLite Ultralight Sleeping Mat',
-    description: 'Ergonomic 6 cm sleeping mat with integrated pillow. 590 g, R-value 2.5, packs to 21 × 11 cm. Free UK delivery over £30.',
+    title: 'DreamLite Ultralight Camping Mat & Pillow',
+    description: 'The Rambler Peak DreamLite ultralight camping mat with integrated pillow. A 6 cm insulated sleeping mat, 590 g, R-value 2.5, packs to 21 × 11 cm. Free UK delivery over £30.',
   },
 };
 
