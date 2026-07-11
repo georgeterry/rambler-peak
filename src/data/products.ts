@@ -29,6 +29,8 @@ export type Product = {
   faqs: { q: string; a: string }[];
   // null = no reviews sourced yet. Never invent a rating: hide it in the UI instead.
   ratingSummary: { average: number; count: number } | null;
+  // The same product on marketplaces (shown as a trust link and in schema).
+  amazonUrl?: string;
   meta: { title: string; description: string };
 };
 
@@ -96,6 +98,7 @@ const dreamlite: Product = {
     { q: 'Is the fabric noisy?', a: 'The 40D Nylon TPU we use is chosen partly for its low crinkle. It is quieter than most ultralight mats, though not silent.' },
   ],
   ratingSummary: { average: 4.2, count: 78 }, // real, from amazon.co.uk/dp/B0BLS968D6
+  amazonUrl: 'https://www.amazon.co.uk/dp/B0BLS968D6',
   meta: {
     title: 'DreamLite Ultralight Camping Mat & Pillow',
     description: 'The Rambler Peak DreamLite ultralight camping mat with integrated pillow. A 6 cm insulated sleeping mat, 590 g, R-value 2.5, packs to 21 × 11 cm. Free UK delivery over £30.',
@@ -154,8 +157,8 @@ const pillow: Product = {
   ],
   ratingSummary: null, // no standalone pillow reviews sourced yet — rating UI hides itself
   meta: {
-    title: 'Camping Pillow',
-    description: 'Inflatable ergonomic pillow with a secure strap. 85 g, packs to the size of a plum. Fits any standard mat. Free UK delivery over £30.',
+    title: 'Inflatable Camping Pillow',
+    description: 'Ultralight inflatable camping pillow with a secure strap that fits any mat. 85 g, one breath to inflate, packs to the size of a plum. Free UK delivery over £30.',
   },
 };
 

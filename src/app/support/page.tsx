@@ -7,7 +7,7 @@ import { FAQAccordion } from '@/components/content/FAQAccordion';
 import { PlaceholderImage } from '@/components/brand/PlaceholderImage';
 import { ButtonLink } from '@/components/primitives/Button';
 import { supportFaqs } from '@/data/faqs';
-import { site } from '@/lib/seo';
+import { site, faqJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'FAQ & Support',
@@ -17,8 +17,13 @@ export const metadata: Metadata = {
 };
 
 export default function SupportPage() {
+  const allFaqs = supportFaqs.flatMap((g) => g.faqs);
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(allFaqs)) }}
+      />
       <Section tone="mist" padding="md">
         <Container>
           <Reveal>

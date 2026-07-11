@@ -66,6 +66,8 @@ export type ProductJsonLdInput = {
   image: string;
   priceGBP: number;
   rating?: { average: number; count: number };
+  // Same product listed elsewhere (e.g. the Amazon listing) — honest entity link.
+  sameAs?: string[];
 };
 
 export const productJsonLd = (p: ProductJsonLdInput) => ({
@@ -75,6 +77,7 @@ export const productJsonLd = (p: ProductJsonLdInput) => ({
   description: p.description,
   image: [`${site.url}${p.image}`],
   brand: { '@type': 'Brand', name: site.name },
+  ...(p.sameAs && p.sameAs.length ? { sameAs: p.sameAs } : {}),
   offers: {
     '@type': 'Offer',
     url: `${site.url}/products/${p.slug}`,
@@ -82,6 +85,33 @@ export const productJsonLd = (p: ProductJsonLdInput) => ({
     price: p.priceGBP.toFixed(2),
     availability: 'https://schema.org/InStock',
     itemCondition: 'https://schema.org/NewCondition',
+    // Real policies, as published on /shipping-returns. Google surfaces these
+    // in shopping/merchant results for UK queries.
+    shippingDetails: {
+      '@type': 'OfferShippingDetails',
+      shippingRate: {
+        '@type': 'MonetaryAmount',
+        // Flat tracked rate; free over £30 (conditional rates aren't
+        // expressible in a single OfferShippingDetails, so we declare the
+        // worst case a buyer could pay).
+        value: p.priceGBP >= 30 ? '0.00' : '3.95',
+        currency: 'GBP',
+      },
+      shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'GB' },
+      deliveryTime: {
+        '@type': 'ShippingDeliveryTime',
+        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 1, unitCode: 'DAY' },
+        transitTime: { '@type': 'QuantitativeValue', minValue: 2, maxValue: 3, unitCode: 'DAY' },
+      },
+    },
+    hasMerchantReturnPolicy: {
+      '@type': 'MerchantReturnPolicy',
+      applicableCountry: 'GB',
+      returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+      merchantReturnDays: 30,
+      returnMethod: 'https://schema.org/ReturnByMail',
+      returnFees: 'https://schema.org/ReturnFeesCustomerResponsibility',
+    },
   },
   ...(p.rating
     ? {
@@ -92,6 +122,36 @@ export const productJsonLd = (p: ProductJsonLdInput) => ({
         },
       }
     : {}),
+});
+
+// Influences the site name Google shows beside the favicon in results.
+export const websiteJsonLd = () => ({
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  alternateName: 'Rambler Peak®',
+  url: site.url,
+});
+
+export const breadcrumbJsonLd = (items: { name: string; path: string }[]) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.name,
+    item: `${site.url}${item.path}`,
+  })),
+});
+
+export const faqJsonLd = (faqs: { q: string; a: string }[]) => ({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
 });
 
 export const organizationJsonLd = () => ({

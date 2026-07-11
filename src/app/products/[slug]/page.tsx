@@ -19,7 +19,7 @@ import { BenefitRow } from '@/components/content/BenefitRow';
 import { VideoBlock } from '@/components/content/VideoBlock';
 import { products, getProduct, formatPrice } from '@/data/products';
 import { productReviews, ratingDistribution } from '@/data/reviews';
-import { productJsonLd } from '@/lib/seo';
+import { productJsonLd, breadcrumbJsonLd, faqJsonLd } from '@/lib/seo';
 
 type Params = { slug: string };
 
@@ -155,6 +155,19 @@ export default function ProductPage({ params }: { params: Params }) {
               distribution={distribution}
               className="mt-10"
             />
+            {product.amazonUrl && (
+              <p className="mt-6 text-body text-rp-slate">
+                Collected from our Amazon listing.{' '}
+                <a
+                  href={product.amazonUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-underline"
+                >
+                  Read all {product.ratingSummary.count} reviews on Amazon
+                </a>
+              </p>
+            )}
             <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {reviews.map((r) => (
                 <Reveal key={r.id}>
@@ -179,9 +192,26 @@ export default function ProductPage({ params }: { params: Params }) {
               image: product.images[0].src,
               priceGBP: product.price.amount / 100,
               rating: product.ratingSummary ?? undefined,
+              sameAs: product.amazonUrl ? [product.amazonUrl] : undefined,
             }),
           ),
         }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: 'Home', path: '/' },
+              { name: 'Shop', path: '/shop' },
+              { name: product.name, path: `/products/${product.slug}` },
+            ]),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(product.faqs)) }}
       />
     </>
   );
