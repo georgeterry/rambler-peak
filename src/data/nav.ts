@@ -21,6 +21,7 @@ export const footerNav = {
   company: [
     { href: '/about', label: 'Our Story' },
     { href: '/guides', label: 'Guides' },
+    { href: '/trade', label: 'Trade & group orders' },
   ],
   legal: [
     { href: '/privacy', label: 'Privacy' },
