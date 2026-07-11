@@ -30,9 +30,11 @@ export const site = {
   registeredAddress: '4 Ganton Way, Grantham, England, NG31 9FD',
   vatNumber: '',            // leave blank if not VAT registered
   social: {
-    instagram: '',
-    tiktok: '',
+    instagram: 'ramblerpeak',
+    tiktok: 'ramblerpeak',
   },
+  amazonStoreUrl:
+    'https://www.amazon.co.uk/stores/RAMBLERPEAK/page/C7E041B4-59E9-4253-87E0-A03ED1FDAEF9',
 } as const;
 
 // Composes the trading-identity sentence for the legal pages from whatever is
@@ -161,7 +163,13 @@ export const organizationJsonLd = () => ({
   url: site.url,
   logo: `${site.url}/logos/wordmark-black.png`,
   areaServed: 'GB',
-  sameAs: Object.values(site.social).filter(Boolean),
+  // Profiles representing the brand elsewhere — strengthens the entity graph
+  // behind brand-name searches.
+  sameAs: [
+    site.social.instagram && `https://www.instagram.com/${site.social.instagram}`,
+    site.social.tiktok && `https://www.tiktok.com/@${site.social.tiktok}`,
+    site.amazonStoreUrl,
+  ].filter(Boolean),
   contactPoint: [
     {
       '@type': 'ContactPoint',

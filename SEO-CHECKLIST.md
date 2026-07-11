@@ -23,13 +23,12 @@ code. This file lists the steps **only you can do**, plus what to expect.
    - [ ] Check back in ~1 week: Pages report should show the 10 sitemap URLs
      indexed and the old Shopify-era URLs dropping out
 
-2. **Marketplace + social URLs for the entity graph** — give these to Claude
-   (or add them in `src/lib/seo.ts` → `site.social`) and they'll be wired into
-   the Organization `sameAs`, which strengthens brand-name search:
-   - [ ] Amazon storefront URL (not the product listing — the brand store page)
-   - [ ] eBay shop URL, if you have one
-   - [ ] TikTok Shop / TikTok profile URL
-   - [ ] Instagram profile URL
+2. **Marketplace + social URLs for the entity graph** — wired into the
+   Organization `sameAs` (and the footer social icons):
+   - [x] Amazon storefront (amazon.co.uk/stores/RAMBLERPEAK)
+   - [x] TikTok — @ramblerpeak
+   - [x] Instagram — @ramblerpeak
+   - [ ] eBay shop URL, if/when you have one
 
 3. **Google Business Profile** — only if you want to appear for local
    searches; for a pure ecommerce brand it's optional. If The Paisley Group
