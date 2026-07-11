@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Poppins } from 'next/font/google';
-import { site, organizationJsonLd } from '@/lib/seo';
+import { site, organizationJsonLd, websiteJsonLd } from '@/lib/seo';
 import { CartProvider } from '@/lib/cart';
 import { Header } from '@/components/shell/Header';
 import { Footer } from '@/components/shell/Footer';
@@ -32,12 +32,15 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },
+      // 48px-multiple PNG per Google's favicon-in-search guidelines
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
     ],
     shortcut: '/favicon.ico',
     apple: '/apple-touch-icon.png',
   },
+  manifest: '/site.webmanifest',
   robots: { index: true, follow: true },
 };
 
@@ -69,6 +72,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
+        />
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
         />
       </body>
     </html>

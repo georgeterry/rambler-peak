@@ -1,0 +1,13 @@
+{
+  "name": "Rambler Peak",
+  "short_name": "Rambler Peak",
+  "description": "Ultralight camping sleep systems engineered in the Peak District.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#FFFFFF",
+  "theme_color": "#1E242B",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
