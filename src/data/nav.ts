@@ -2,6 +2,7 @@ export const primaryNav = [
   { href: '/shop', label: 'Shop' },
   { href: '/products/dreamlite-camping-mat', label: 'DreamLite Mat' },
   { href: '/products/camping-pillow', label: 'Pillow' },
+  { href: '/guides', label: 'Guides' },
   { href: '/about', label: 'Our Story' },
   { href: '/support', label: 'Support' },
 ] as const;
@@ -19,6 +20,7 @@ export const footerNav = {
   ],
   company: [
     { href: '/about', label: 'Our Story' },
+    { href: '/guides', label: 'Guides' },
   ],
   legal: [
     { href: '/privacy', label: 'Privacy' },

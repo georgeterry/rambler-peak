@@ -50,7 +50,12 @@ code. This file lists the steps **only you can do**, plus what to expect.
 - The site-name shown beside the favicon comes from the `WebSite` schema +
   brand signals; Google decides, and it can lag the favicon.
 
-## Content ideas that would realistically earn UK organic traffic
+## Content — LIVE at /guides
+
+All five guides below are now written and published under `/guides`, in the
+sitemap, linked from the header and footer, with Article + BreadcrumbList
+schema and internal links to both products. After the next deploy, request
+indexing for `/guides` in Search Console.
 
 Each targets a real UK search intent the products can honestly serve.
 
