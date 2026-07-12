@@ -13,16 +13,15 @@ export default function ShippingReturnsPage() {
   return (
     <LegalPage
       title="Shipping & Returns"
-      updated="2 July 2026"
-      intro="The plain-English version: free UK delivery over £30, 30 days to change your mind, and a 1-year warranty we honour without a fight."
+      updated="12 July 2026"
+      intro="The plain-English version: free UK delivery on every order, 30 days to change your mind, and a 1-year warranty we honour without a fight."
       blocks={[
         {
           heading: 'UK delivery',
           body: (
             <>
               <p>
-                Orders over £30 ship free. Under £30, delivery is a flat £3.95. Everything
-                goes by tracked Royal Mail.
+                Every order ships free within the UK, sent by tracked Royal Mail.
               </p>
               <p>
                 Order before 2 pm on a working day and we dispatch the same day. Typical

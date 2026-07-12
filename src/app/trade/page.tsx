@@ -52,7 +52,7 @@ export default function TradePage() {
                 ))}
               </ul>
               <p className="mt-4 text-caption text-rp-slate">
-                RRP £24.99. Prices include UK delivery. Payment by invoice and bank transfer.
+                RRP £29.99. Prices include UK delivery. Payment by invoice and bank transfer.
               </p>
               <ul className="mt-8 space-y-3">
                 {[

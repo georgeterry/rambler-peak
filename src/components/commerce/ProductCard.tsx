@@ -44,9 +44,14 @@ export const ProductCard = ({ product, className }: Props) => {
             </div>
           )}
         </div>
-        <p className="text-subhead font-semibold shrink-0 text-right">
-          {formatPrice(product.price)}
-        </p>
+        <div className="shrink-0 text-right">
+          <p className="text-subhead font-semibold">{formatPrice(product.price)}</p>
+          {product.compareAtPrice && (
+            <p className="text-caption text-rp-slate line-through">
+              RRP {formatPrice(product.compareAtPrice)}
+            </p>
+          )}
+        </div>
       </div>
       <div className="mt-6 flex flex-wrap gap-3">
         <Button onClick={() => add(product.slug, 1)} size="md">

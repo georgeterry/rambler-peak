@@ -31,7 +31,7 @@ export const supportFaqs: FAQGroup[] = [
   {
     title: 'Shipping & returns',
     faqs: [
-      { q: 'Do you offer free UK delivery?', a: 'Free UK delivery on all orders over £30. Under £30, delivery is a flat £3.95. Everything is sent by tracked Royal Mail.' },
+      { q: 'Do you offer free UK delivery?', a: 'Yes. Free UK delivery on every order, sent by tracked Royal Mail.' },
       { q: 'How long does delivery take?', a: 'Orders placed before 2 pm on a working day are dispatched the same day. UK delivery is typically 2 to 3 working days.' },
       { q: 'Do you ship internationally?', a: 'Not yet. We are UK-only for now. Sign up to our newsletter to hear when we open shipping to Ireland and Europe.' },
       { q: 'What is your returns policy?', a: 'Return any unused item within 30 days for a full refund. We cover the return label on faulty items.' },

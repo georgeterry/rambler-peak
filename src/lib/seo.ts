@@ -6,11 +6,13 @@ export const site = {
   legalName: 'Rambler Peak',
   tagline: 'Ultralight sleep systems from the Peak District',
   description:
-    'Ultralight sleep systems engineered in the Peak District. Free UK delivery on orders over £30.',
+    'Ultralight sleep systems engineered in the Peak District. Free UK delivery on every order.',
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.ramblerpeak.com',
   locale: 'en-GB',
   currency: 'GBP',
-  freeShippingThresholdPence: 3000,
+  // 0 = free UK delivery on everything (summer sale). Restore to 3000 to
+  // bring back the "free over £30" threshold and all its nudge copy.
+  freeShippingThresholdPence: 0,
   supportEmail: 'hello@ramblerpeak.com',
   // Welcome discount promised in the newsletter capture. The matching Stripe
   // promotion code is created by scripts/create-welcome-code.mjs and entered
@@ -93,10 +95,9 @@ export const productJsonLd = (p: ProductJsonLdInput) => ({
       '@type': 'OfferShippingDetails',
       shippingRate: {
         '@type': 'MonetaryAmount',
-        // Flat tracked rate; free over £30 (conditional rates aren't
-        // expressible in a single OfferShippingDetails, so we declare the
-        // worst case a buyer could pay).
-        value: p.priceGBP >= 30 ? '0.00' : '3.95',
+        // Free UK delivery on every order (summer sale). If the £30 threshold
+        // returns, reinstate the conditional worst-case rate here.
+        value: '0.00',
         currency: 'GBP',
       },
       shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'GB' },

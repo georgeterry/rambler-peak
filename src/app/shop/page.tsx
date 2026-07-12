@@ -10,7 +10,7 @@ import { products } from '@/data/products';
 export const metadata: Metadata = {
   title: 'Shop Camping Mats & Pillows',
   description:
-    'Shop Rambler Peak ultralight camping mats and pillows from the Peak District: the DreamLite camping mat with integrated pillow, and the standalone camping pillow. Free UK delivery over £30.',
+    'Shop Rambler Peak ultralight camping mats and pillows from the Peak District: the DreamLite camping mat with integrated pillow, and the standalone camping pillow. Free UK delivery.',
   alternates: { canonical: '/shop' },
 };
 

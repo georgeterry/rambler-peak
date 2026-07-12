@@ -30,12 +30,17 @@ export const BuyBox = ({ product, className }: Props) => {
       )}
       <p className="mt-6 text-body-lg text-rp-slate">{product.tagline}</p>
 
-      <div className="mt-6 flex items-baseline gap-3">
+      <div className="mt-6 flex items-baseline gap-3 flex-wrap">
         <span className="text-h1-brand font-semibold">{formatPrice(product.price)}</span>
         {product.compareAtPrice && (
-          <span className="text-body text-rp-slate line-through">
-            {formatPrice(product.compareAtPrice)}
-          </span>
+          <>
+            <span className="text-body text-rp-slate line-through">
+              RRP {formatPrice(product.compareAtPrice)}
+            </span>
+            <span className="inline-flex items-center rounded-full bg-rp-blue px-3 py-1 text-eyebrow uppercase text-rp-white">
+              Save {formatPrice({ amount: product.compareAtPrice.amount - product.price.amount, currency: 'GBP' })}
+            </span>
+          </>
         )}
       </div>
 
@@ -72,7 +77,7 @@ export const BuyBox = ({ product, className }: Props) => {
       <ul className="mt-6 space-y-2 text-caption text-rp-slate">
         <li className="flex items-center gap-2">
           <Icon name="check" className="h-4 w-4 text-rp-blue" strokeWidth={2} aria-hidden />
-          Free UK delivery on orders over £30
+          Free UK delivery on every order
         </li>
         <li className="flex items-center gap-2">
           <Icon name="check" className="h-4 w-4 text-rp-blue" strokeWidth={2} aria-hidden />

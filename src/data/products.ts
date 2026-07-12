@@ -41,7 +41,11 @@ const dreamlite: Product = {
   name: 'DreamLite Ultralight Camping Mat',
   shortName: 'DreamLite Mat',
   tagline: 'Ergonomic ultralight sleep system with integrated pillow.',
-  price: gbp(27.99),
+  price: gbp(21.99),
+  // Genuine reference price: the mat sold at £29.99 on Amazon for sustained
+  // periods (May-June 2026, business report retained as evidence). Never set
+  // a compare-at price the product has not genuinely sold at.
+  compareAtPrice: gbp(29.99),
   stripePriceId: process.env.STRIPE_PRICE_DREAMLITE,
   hero: {
     eyebrow: 'DreamLite · Sleep System',
@@ -101,7 +105,7 @@ const dreamlite: Product = {
   amazonUrl: 'https://www.amazon.co.uk/dp/B0BLS968D6',
   meta: {
     title: 'DreamLite Ultralight Camping Mat & Pillow',
-    description: 'The Rambler Peak DreamLite ultralight camping mat with integrated pillow. A 6 cm insulated sleeping mat, 590 g, R-value 2.5, packs to 21 × 11 cm. Free UK delivery over £30.',
+    description: 'The Rambler Peak DreamLite ultralight camping mat with integrated pillow. A 6 cm insulated sleeping mat, 590 g, R-value 2.5, packs to 21 × 11 cm. Free UK delivery.',
   },
 };
 
@@ -158,7 +162,7 @@ const pillow: Product = {
   ratingSummary: null, // no standalone pillow reviews sourced yet — rating UI hides itself
   meta: {
     title: 'Inflatable Camping Pillow',
-    description: 'Ultralight inflatable camping pillow with a secure strap that fits any mat. 85 g, one breath to inflate, packs to the size of a plum. Free UK delivery over £30.',
+    description: 'Ultralight inflatable camping pillow with a secure strap that fits any mat. 85 g, one breath to inflate, packs to the size of a plum. Free UK delivery.',
   },
 };
 

@@ -111,7 +111,9 @@ export const CartDrawer = () => {
               </ul>
             </div>
             <div className="px-5 sm:px-8 py-5 border-t border-rp-hairline space-y-4">
-              {!eligibleForFree ? (
+              {site.freeShippingThresholdPence === 0 ? (
+                <p className="text-caption text-rp-blue">Free UK delivery on every order.</p>
+              ) : !eligibleForFree ? (
                 <p className="text-caption text-rp-slate">
                   Add{' '}
                   <span className="text-rp-charcoal font-medium">{formatPence(remaining)}</span>{' '}
