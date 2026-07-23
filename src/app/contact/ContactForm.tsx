@@ -7,12 +7,14 @@ import { trackEvent } from '@/lib/analytics';
 
 export const ContactForm = () => {
   const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle');
+  const [renderedAt] = useState(() => Date.now());
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('loading');
     const form = e.currentTarget;
-    const data = Object.fromEntries(new FormData(form).entries());
+    const entries = Object.fromEntries(new FormData(form).entries());
+    const data = { ...entries, renderedAt };
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -20,7 +22,7 @@ export const ContactForm = () => {
         body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error();
-      trackEvent({ name: 'contact_submit', has_order_number: Boolean(data.orderNumber) });
+      trackEvent({ name: 'contact_submit', has_order_number: Boolean(entries.orderNumber) });
       setStatus('ok');
       form.reset();
     } catch {
@@ -30,6 +32,11 @@ export const ContactForm = () => {
 
   return (
     <form onSubmit={submit} className="space-y-6" aria-live="polite">
+      {/* Honeypot: hidden from real visitors, bots that fill every field trip it */}
+      <div className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+        <label htmlFor="contact-website">Leave this field blank</label>
+        <input id="contact-website" name="website" tabIndex={-1} autoComplete="off" />
+      </div>
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <Label htmlFor="contact-name">Name</Label>

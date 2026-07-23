@@ -8,12 +8,13 @@ const QUANTITIES = ['20 to 39 units', '40 to 99 units', '100+ units', 'Not sure 
 
 export const TradeForm = () => {
   const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle');
+  const [renderedAt] = useState(() => Date.now());
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('loading');
     const form = e.currentTarget;
-    const data = Object.fromEntries(new FormData(form).entries());
+    const data = { ...Object.fromEntries(new FormData(form).entries()), renderedAt };
     try {
       const res = await fetch('/api/trade', {
         method: 'POST',
@@ -30,6 +31,11 @@ export const TradeForm = () => {
 
   return (
     <form onSubmit={submit} className="space-y-6" aria-live="polite">
+      {/* Honeypot: hidden from real visitors, bots that fill every field trip it */}
+      <div className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+        <label htmlFor="trade-website">Leave this field blank</label>
+        <input id="trade-website" name="website" tabIndex={-1} autoComplete="off" />
+      </div>
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <Label htmlFor="trade-name">Your name</Label>

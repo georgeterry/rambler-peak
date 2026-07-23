@@ -16,6 +16,8 @@ export async function POST(request: Request) {
     quantity: string;
     message?: string;
   };
+  let honeypot: string;
+  let renderedAt: number;
   try {
     const body = await request.json();
     p = {
@@ -26,11 +28,25 @@ export async function POST(request: Request) {
       quantity: String(body?.quantity ?? '').trim(),
       message: body?.message ? String(body.message).trim() : undefined,
     };
+    honeypot = String(body?.website ?? '').trim();
+    renderedAt = Number(body?.renderedAt ?? 0);
   } catch {
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
   }
 
-  if (!p.name || !p.organisation || !p.quantity || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email)) {
+  // Bot deterrence: a filled honeypot or a submit faster than any human can
+  // fill the form both mean a bot. Report success without sending so the bot
+  // doesn't adapt and retry.
+  if (honeypot || !renderedAt || Date.now() - renderedAt < 1500) {
+    return NextResponse.json({ ok: true });
+  }
+
+  if (
+    !p.name ||
+    !p.organisation ||
+    !p.quantity ||
+    !/^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$/.test(p.email)
+  ) {
     return NextResponse.json(
       { error: 'Name, organisation, a valid email and a quantity are required' },
       { status: 422 },

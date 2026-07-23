@@ -8,6 +8,8 @@ import { site } from '@/lib/seo';
 // Contract: POST { name, email, orderNumber?, message } -> 200 | 4xx.
 export async function POST(request: Request) {
   let payload: { name: string; email: string; orderNumber?: string; message: string };
+  let honeypot: string;
+  let renderedAt: number;
   try {
     const body = await request.json();
     payload = {
@@ -16,11 +18,24 @@ export async function POST(request: Request) {
       orderNumber: body?.orderNumber ? String(body.orderNumber).trim() : undefined,
       message: String(body?.message ?? '').trim(),
     };
+    honeypot = String(body?.website ?? '').trim();
+    renderedAt = Number(body?.renderedAt ?? 0);
   } catch {
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
   }
 
-  if (!payload.name || !payload.message || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+  // Bot deterrence: a filled honeypot or a submit faster than any human can
+  // fill the form both mean a bot. Report success without sending so the bot
+  // doesn't adapt and retry.
+  if (honeypot || !renderedAt || Date.now() - renderedAt < 1500) {
+    return NextResponse.json({ ok: true });
+  }
+
+  if (
+    !payload.name ||
+    !payload.message ||
+    !/^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$/.test(payload.email)
+  ) {
     return NextResponse.json(
       { error: 'Name, a valid email and a message are required' },
       { status: 422 },
